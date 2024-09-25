@@ -6,5 +6,13 @@ function getBookById(books, number) {
         return libro;
     }
 }
+function getBookIndexById(books, number) {
+    let libro = books.findIndex(libro =>  libro.id === number);
+    if(libro === -1) {
+        throw "No existe ningún libro con ese ID.";
+    } else {
+        return libro;
+    }
+}
 
-export{getBookById}
+export{getBookById, getBookIndexById}
