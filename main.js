@@ -11,12 +11,9 @@ document.querySelector('#app').innerHTML = `
     </p>
   </div>
 `
-let librosUsuario4 = funciones.booksFromUser(data.books, 4);
-console.log(librosUsuario4);
+console.log(funciones.booksFromUser(data.books, 4));
 
 let librosModulo5021 = funciones.booksFromModule(data.books, "5021");
-let librosEnModulo5021YEnEstadoGood = funciones.booksWithStatus(librosModulo5021, "good");
-console.log(librosEnModulo5021YEnEstadoGood);
+console.log(funciones.booksWithStatus(librosModulo5021, "good"));
 
-let incremento = funciones.incrementPriceOfbooks(data.books, 10);
-console.log(incremento);
+console.log(funciones.incrementPriceOfbooks(data.books, 0.1));
