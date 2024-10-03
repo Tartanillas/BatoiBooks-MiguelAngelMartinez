@@ -1,6 +1,8 @@
-import * as funciones from './src/functions';
-import './style.css';
 import data from './src/services/datos.js';
+import Books from './src/model/books.class.js';
+import Modules from './src/model/modules.class';
+import Users from './src/model/users.class';
+import './style.css';
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -11,9 +13,13 @@ document.querySelector('#app').innerHTML = `
     </p>
   </div>
 `
-console.log(funciones.booksFromUser(data.books, 4));
 
-let librosModulo5021 = funciones.booksFromModule(data.books, "5021");
-console.log(funciones.booksWithStatus(librosModulo5021, "good"));
-
-console.log(funciones.incrementPriceOfbooks(data.books, 0.1));
+let libros = new Books();
+let modulos = new Modules();
+let usuarios = new Users();
+libros.populate(data.books);
+modulos.populate(data.modules);
+usuarios.populate(data.users);
+console.log(libros.booksFromModule("5021"));
+console.log(libros.booksWithStatus("nuevo"));
+console.log(libros.incrementPriceOfbooks(0.1));
