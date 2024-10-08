@@ -1,4 +1,3 @@
-import data from './src/services/datos.js';
 import Books from './src/model/books.class.js';
 import Modules from './src/model/modules.class';
 import Users from './src/model/users.class';
