@@ -16,9 +16,9 @@ document.querySelector('#app').innerHTML = `
 let libros = new Books();
 let modulos = new Modules();
 let usuarios = new Users();
-libros.populate(data.books);
-modulos.populate(data.modules);
-usuarios.populate(data.users);
+await libros.populate();
+await modulos.populate();
+await usuarios.populate();
 console.log(libros.booksFromModule("5021"));
 console.log(libros.booksWithStatus("nuevo"));
-console.log(libros.incrementPriceOfbooks(0.1));
+//console.log(libros.incrementPriceOfbooks(0.1));

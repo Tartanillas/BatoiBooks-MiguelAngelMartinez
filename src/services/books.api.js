@@ -1,29 +1,77 @@
+const SERVER = import.meta.env.VITE_URL_API;
 async function getDBBooks() {
+  try {
     const response = await fetch(SERVER + "/books");
     if (!response.ok) {
-        throw `Error ${response.status} de la BBDD: ${response.statusText}`;
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
     }
     const data = await response.json();
     return data;
+  } catch (err) {
+    throw new Error(err);
+  }
 }
 
-async function getDBBooks(id) {
-    const response = await fetch(SERVER + "/books?id=" + ids);
+async function getDBBook(id) {
+  try {
+    const response = await fetch(SERVER + "/books/" + id);
     if (!response.ok) {
-        throw `Error ${response.status} de la BBDD: ${response.statusText}`;
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
     }
     const data = await response.json();
     return data;
+  } catch (err) {
+    throw new Error(err);
+  }
 }
 
-function addDBBook(book) {
-
+async function addDBBook(book) {
+  const response = await fetch(SERVER + "/books", {
+    method: "POST",
+    body: JSON.stringify(book),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    throw `Error ${response.status} de la BBDD: ${response.statusText}`;
+  }
+  const data = await response.json();
+  return data;
 }
 
-function removeDBBook(id) {
-
+async function removeDBBook(id) {
+  try {
+    const response = await fetch(SERVER + "/books/" + id, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    throw new Error(err);
+  }
 }
 
-function changeDBBook(book) {
-
+async function changeDBBook(book) {
+  try {
+    const response = await fetch(SERVER + "/books/" + book.id, {
+      method: "PUT",
+      body: JSON.stringify(book),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
+    }
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    throw new Error(err);
+  }
 }
+
+export { getDBBooks, getDBBook, addDBBook, removeDBBook, changeDBBook };

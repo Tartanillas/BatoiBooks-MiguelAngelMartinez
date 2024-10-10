@@ -10,6 +10,8 @@
     "test": "vitest"
   },
   "devDependencies": {
+    "msv": "^3.0.2",
+    "msw": "^2.4.9",
     "vite": "^5.4.1",
     "vitest": "^2.1.1"
   }

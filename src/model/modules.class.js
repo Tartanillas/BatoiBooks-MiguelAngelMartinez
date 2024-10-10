@@ -1,12 +1,12 @@
 import Module from './module.class';
+import { getDBModules } from '../services/modules.api';
 export default class Modules {
     constructor() {
         this.data = [];
     }
-    populate(array) {
-        for(let i = 0; i < array.length; i++) {
-            this.data[i] = new Module(array[i].code, array[i].cliteral, array[i].vliteral, array[i].courseId);
-        }
+    async populate() {
+        let arrayDatos = await getDBModules();
+        this.data = arrayDatos.map(item => new Module(item.code, item.cliteral, item.vliteral, item.courseId))
     }
     toString() {
         let cadena = "";

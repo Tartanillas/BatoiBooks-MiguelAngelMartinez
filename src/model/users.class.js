@@ -1,37 +1,40 @@
 import User from './user.class';
+import { getDBUsers, addDBUser, removeDBUser, changeDBUser, changeDBUserPassword } from '../services/users.api';
 export default class Users {
     constructor() {
         this.data = [];
     }
-    populate(array) {
-        for(let i = 0; i < array.length; i++) {
-            this.data[i] = new User(array[i].id, array[i].nick, array[i].email, array[i].password);
-        }
+    async populate() {
+        let arrayDatos = await getDBUsers();
+        this.data = arrayDatos.map(item => new User(item.id, item.nick, item.email, item.password))
     }
-    addUser(usuario) {
-        let nextId = this.data.reduce((max, usuario) => usuario.id > max ? usuario.id : max, 0) + 1;
-        let nuevoUsuario = new User(nextId, usuario.nick, usuario.email, usuario.password);
-        this.data.push(nuevoUsuario);
-        return nuevoUsuario;
+    async addUser(user) {
+        let usuario = await addDBUser(user);
+        this.data.push(usuario);
+        return new User(usuario.id, usuario.nick, usuario.email, usuario.password);
     }
     
-
-    removeUser(id) {
-        let usuario = this.data.findIndex((user) => user.id == id);
-        if (usuario === -1) {
-            throw "No existe ningún usuario con ese ID.";
-        }
-        this.data.splice(usuario, 1);
+    async removeUser(id) {
+        let usuario = removeDBUser(id);
+        let posicionUsuario = this.getUserIndexById(id);
+        this.data.splice(posicionUsuario, 1);
+        return usuario;
     }
 
-    changeUser(usuario) {
-        let usuarioAModificar = this.data.findIndex(user => user.id === usuario.id);
-        if (usuarioAModificar === -1) {
-            throw "No existe ningún usuario con ese ID.";
-        } else {
-            this.data.splice(usuarioAModificar, 1, usuario);
-            return usuario;
-        }
+    async changeUser(usuario) {
+        let indiceUsuarioAModificar = this.getUserIndexById(usuario.id);
+        let usuarioActualizado = await changeDBUser(usuario);
+        let nuevoUsuario = new User(usuarioActualizado.id, usuarioActualizado.nick, usuarioActualizado.email, usuarioActualizado.password);
+        this.data.splice(indiceUsuarioAModificar, 1, nuevoUsuario);
+        return nuevoUsuario;
+    }
+
+    async changeUserPassword(id, contrasenya) {
+        let usuarioContrasenyaModificada = await changeDBUserPassword(id, contrasenya);
+        let nuevoUsuario = new User(usuarioContrasenyaModificada.id, usuarioContrasenyaModificada.nick, usuarioContrasenyaModificada.email, usuarioContrasenyaModificada.password);
+        let indiceUsuario = this.getUserIndexById(id);
+        this.data.splice(indiceUsuario, 1, nuevoUsuario);
+        return nuevoUsuario;
     }
 
     toString() {
@@ -57,6 +60,7 @@ export default class Users {
         }
         return usuario;
     }
+
     getUserByNickName(nick) {
         let usuario = this.data.find((usuario) => usuario.nick === nick);
         if (!usuario) {
@@ -64,4 +68,5 @@ export default class Users {
         }
         return usuario;
     }
+
 }

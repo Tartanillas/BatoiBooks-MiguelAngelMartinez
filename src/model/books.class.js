@@ -1,37 +1,33 @@
 import Book from './book.class';
 const NOTES = "Apunts";
+import { getDBBooks, addDBBook, removeDBBook, changeDBBook } from '../services/books.api';
 export default class Books {
     constructor() {
         this.data = [];
     }
-    populate(array) {
-        for(let i = 0; i < array.length; i++) {
-            this.data[i] = new Book(array[i]);
-        }
+    async populate() {
+        let arrayDatos = await getDBBooks();
+        this.data = arrayDatos.map(item => new Book(item));
     }
-    addBook(libro) {
-        let nextId = this.data.reduce((max, book) => book.id > max ? book.id : max, 0) + 1;
-        let nuevoLibro = new Book({...libro, id: nextId});
-        this.data.push(nuevoLibro);
-        return nuevoLibro;
+    async addBook(book) {
+        let libro = await addDBBook(book);
+        let libroNuevo = new Book(libro);
+        this.data.push(libroNuevo);
+        return libroNuevo;
     }
     
-    removeBook(id) {
-        let libro = this.data.findIndex((book) => book.id == id);
-        if (libro === -1) {
-            throw "No existe ningún libro con ese ID.";
-        }
-        this.data.splice(libro, 1);
+    async removeBook(id) {
+        await removeDBBook(id);
+        let posicionLibro = this.getBookIndexById(id);
+        this.data.splice(posicionLibro, 1);
     }
 
-    changeBook(libro) {
-        let libroAModificar = this.data.findIndex(book => book.id === libro.id);
-        if (libroAModificar === -1) {
-            throw "No existe ningún libro con ese ID.";
-        } else {
-            this.data.splice(libroAModificar, 1, libro);
-            return libro;
-        }
+    async changeBook(libro) {
+        await changeDBBook(libro);
+        let indiceLibroAModificar = this.getBookIndexById(libro.id);
+        let nuevoLibro = new Book(libro);
+        this.data.splice(indiceLibroAModificar, 1, nuevoLibro);
+        return nuevoLibro;
     }
 
     toString() {
@@ -122,9 +118,4 @@ export default class Books {
         }
         return libros;
     }
-    
-    incrementPriceOfbooks(percentage) {
-        return this.data.map((libro) => ({...libro, price: Math.round(libro.price * (1 + percentage) * 100) / 100}));
-    }
-
 }
