@@ -63,6 +63,18 @@ h1 {
   color: #888;
 }
 
+.success {
+  background-color: green;
+}
+
+.fail {
+  background-color: red;
+}
+
+.libro {
+  background-color: #535bf2;
+}
+
 button {
   border-radius: 8px;
   border: 1px solid transparent;

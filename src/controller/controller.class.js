@@ -29,24 +29,24 @@ export default class Controller {
         }
     }
 
-    handleSubmitBook(payload){
+    async handleSubmitBook(payload){
         alert('form enviado')
         try {
-            this.model.books.addBook(payload);
-            console.log('Se ha añadido el libro con éxito');
+            await this.model.books.addBook(payload);
+            this.view.renderMessage('Se ha añadido el libro con éxito', 'success');
         } catch(err) {
-            this.view.renderMessage(err);
+            this.view.renderMessage(err, 'fail');
         }
     }
 
-    handleRemoveBook(bookId){
+    async handleRemoveBook(bookId){
         alert('form enviado')
         try {
-            this.model.books.removeBook(bookId);
+            await this.model.books.removeBook(bookId);
             this.view.removeBook(bookId);
-            console.log('Se ha eliminado el libro con ID: ' + bookId);
+            this.view.renderMessage('Se ha eliminado el libro con ID: ' + bookId, 'success');
         } catch(err) {
-            this.view.renderMessage(err);
+            this.view.renderMessage(err, 'fail');
         }
     }
 

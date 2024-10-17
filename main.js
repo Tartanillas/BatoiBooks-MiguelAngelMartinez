@@ -1,6 +1,6 @@
 import "./style.css";
 import batoiLogo from "/logoBatoi.png";
-import Controller from "../BatoiBooks/src/controller/controller.class";
+import Controller from "./src/controller/controller.class";
 
 document.querySelector("#app").innerHTML = `
   <header>

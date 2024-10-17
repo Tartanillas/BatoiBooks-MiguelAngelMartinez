@@ -13,16 +13,12 @@ async function getDBBooks() {
 }
 
 async function getDBBook(id) {
-  try {
     const response = await fetch(SERVER + "/books/" + id);
     if (!response.ok) {
       throw `Error ${response.status} de la BBDD: ${response.statusText}`;
     }
     const data = await response.json();
     return data;
-  } catch (err) {
-    throw new Error(err);
-  }
 }
 
 async function addDBBook(book) {
@@ -41,7 +37,6 @@ async function addDBBook(book) {
 }
 
 async function removeDBBook(id) {
-  try {
     const response = await fetch(SERVER + "/books/" + id, {
       method: "DELETE",
     });
@@ -50,13 +45,9 @@ async function removeDBBook(id) {
     }
     const data = await response.json();
     return data;
-  } catch (err) {
-    throw new Error(err);
-  }
 }
 
 async function changeDBBook(book) {
-  try {
     const response = await fetch(SERVER + "/books/" + book.id, {
       method: "PUT",
       body: JSON.stringify(book),
@@ -69,9 +60,6 @@ async function changeDBBook(book) {
     }
     const data = await response.json();
     return data;
-  } catch (err) {
-    throw new Error(err);
-  }
 }
 
 export { getDBBooks, getDBBook, addDBBook, removeDBBook, changeDBBook };
