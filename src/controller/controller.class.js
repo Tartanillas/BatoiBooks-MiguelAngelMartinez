@@ -16,15 +16,27 @@ export default class Controller {
     async init(){
         this.view.setBookSubmitHandler(this.handleSubmitBook.bind(this));
         this.view.setBookRemoveHandler(this.handleRemoveBook.bind(this));
-        await this.model.modules.populate()
-        this.model.users.populate()
-        this.model.books.populate()
-        this.view.renderModulesOptions(this.model.modules.data)
+        try {
+            await this.model.modules.populate()
+            await this.model.users.populate()
+            await this.model.books.populate()
+            this.view.renderModulesOptions(this.model.modules.data)
+            this.model.books.data.forEach(libro => {
+                this.view.renderBook(libro);
+            });
+        } catch (err) {
+            this.view.renderMessage(err);
+        }
     }
 
     handleSubmitBook(payload){
         alert('form enviado')
-        console.log(payload);
+        try {
+            this.model.books.addBook(payload);
+            console.log('Se ha añadido el libro con éxito');
+        } catch(err) {
+            this.view.renderMessage(err);
+        }
     }
 
     handleRemoveBook(bookId){

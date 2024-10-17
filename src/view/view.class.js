@@ -3,6 +3,7 @@ export default class View {
         this.bookList = document.getElementById("list");
         this.bookForm = document.getElementById('bookForm');
         this.remove = document.getElementById('remove');
+        this.messages = document.getElementById('messages');
     }
 
     renderModulesOptions(modules){
@@ -16,7 +17,7 @@ export default class View {
 
     renderBook(book){
         const contenedor = document.createElement('div');
-        contenedor.innerHTML += `<h3>Libro: ${book.id}</h3><h3>${book.moduleCode}</h3><h3>${book.publisher}</h3><h3>Precio: ${book.price}</h3><h3>Páginas: ${book.pages}</h3><h3>Estado: ${book.status}</h3><h3>Vendido el ${book.soldDate}</h3><h3>Comentarios: ${book.comments}</h3>`;
+        contenedor.innerHTML += `<h1>Libro: ${book.id}</h5><h5>Código de módulo: ${book.moduleCode}</h5><h5>Editorial: ${book.publisher}</h5><h5>Precio: ${book.price}</h5><h5>Páginas: ${book.pages}</h5><h5>Estado: ${book.status}</h5><h5>Vendido el: ${book.soldDate}</h5><h5>Comentarios: ${book.comments}</h5>`;
         this.bookList.append(contenedor);
     }
 
@@ -25,28 +26,35 @@ export default class View {
         this.bookList.remove(libro);
     }
 
-    renderMessage(message){
-
+    renderMessage(message, tipo){
+        this.messages.innerHTML = `<div class="_tipo-recibido_ alert alert-danger alert-dismissible" role="alert"> ${message} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()">x</button></div>`;
     }
 
     setBookSubmitHandler(callback) {  
         this.bookForm.addEventListener('submit', (event) => {
             event.preventDefault()
-           // a continuación recoge los datos del formulario y los guarda en un objeto // por último llama a la función recibida pasándole dicho objeto
+            const moduleCode = document.getElementById('id-module').value;
             const publisher = document.getElementById('publisher').value;
             const price = document.getElementById('price').value;
+            const pages = document.getElementById('pages').value;
+            const status = document.getElementById('status').value;
+            const comments = document.getElementById('comments').value;
             const book = {
+                moduleCode,
                 publisher,
-                price
+                price,
+                pages,
+                status,
+                comments
             }
         callback(book)
         })
         }
 
-        setBookRemoveHandler(callback) {
-            this.remove.addEventListener('click', () => {
-                const idLibro = document.getElementById('id-remove').value;
-                callback(idLibro);
-            })
-        }
+    setBookRemoveHandler(callback) {
+        this.remove.addEventListener('click', () => {
+            const idLibro = document.getElementById('id-remove').value;
+            callback(idLibro);
+        })
+    }
 }
