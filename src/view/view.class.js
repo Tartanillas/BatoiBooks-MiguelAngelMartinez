@@ -9,7 +9,8 @@ export default class View {
     renderModulesOptions(modules){
         modules.forEach(module => {
         const option = document.createElement("option");
-        option.innerHTML = module.cliteral;     
+        option.innerHTML = module.cliteral;
+        option.value = module.code;     
         const select = document.getElementById("id-module");
         select.appendChild(option);
         });
@@ -28,7 +29,12 @@ export default class View {
 
     renderMessage(message, tipo){
         this.messages.innerHTML = `<div class="${tipo} alert alert-danger alert-dismissible" role="alert"> ${message} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.remove()">x</button></div>`;
+        if(tipo === 'success'){
+        setTimeout(() => {
+        this.messages.innerHTML = '';
+        }, 3000)
     }
+}
 
     setBookSubmitHandler(callback) {  
         this.bookForm.addEventListener('submit', (event) => {

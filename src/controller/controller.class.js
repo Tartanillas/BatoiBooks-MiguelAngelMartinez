@@ -25,7 +25,7 @@ export default class Controller {
                 this.view.renderBook(libro);
             });
         } catch (err) {
-            this.view.renderMessage(err);
+            this.view.renderMessage(err, 'fail');
         }
     }
 
