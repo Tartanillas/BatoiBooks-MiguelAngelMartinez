@@ -1,20 +1,20 @@
-const SERVER = import.meta.env.VITE_URL_API;
+const SERVER = import.meta.env.VITE_URL_API
 async function getDBUsers() {
-    const response = await fetch(SERVER + "/users");
+    const response = await fetch(SERVER + "/users")
     if (!response.ok) {
-      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`
     }
-    const data = await response.json();
-    return data;
+    const data = await response.json()
+    return data
 }
 
 async function getDBUser(id) {
-    const response = await fetch(SERVER + "/users/" + id);
+    const response = await fetch(SERVER + "/users/" + id)
     if (!response.ok) {
-      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`
     }
-    const data = await response.json();
-    return data;
+    const data = await response.json()
+    return data
 }
 
 async function addDBUser(user) {
@@ -24,23 +24,23 @@ async function addDBUser(user) {
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    })
     if (!response.ok) {
-      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`
     }
-    const data = await response.json();
-    return data;
+    const data = await response.json()
+    return data
 }
 
 async function removeDBUser(id) {
     const response = await fetch(SERVER + "/users/" + id, {
       method: "DELETE",
-    });
+    })
     if (!response.ok) {
-      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`
     }
-    const data = await response.json();
-    return data;
+    const data = await response.json()
+    return data
 }
 
 async function changeDBUser(user) {
@@ -50,12 +50,12 @@ async function changeDBUser(user) {
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    })
     if (!response.ok) {
-      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`
     }
-    const data = await response.json();
-    return data;
+    const data = await response.json()
+    return data
 }
 
 async function changeDBUserPassword(id, contrasenya) {
@@ -65,12 +65,12 @@ async function changeDBUserPassword(id, contrasenya) {
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    })
     if (!response.ok) {
-      throw `Error ${response.status} de la BBDD: ${response.statusText}`;
+      throw `Error ${response.status} de la BBDD: ${response.statusText}`
     }
-    const data = await response.json();
-    return data;
+    const data = await response.json()
+    return data
 }
 
-export { getDBUsers, getDBUser, addDBUser, removeDBUser, changeDBUser, changeDBUserPassword};
+export { getDBUsers, getDBUser, addDBUser, removeDBUser, changeDBUser, changeDBUserPassword}

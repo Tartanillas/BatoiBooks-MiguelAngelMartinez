@@ -1,6 +1,6 @@
-import "./style.css";
-import batoiLogo from "/logoBatoi.png";
-import Controller from "./src/controller/controller.class";
+import "./style.css"
+import batoiLogo from "/logoBatoi.png"
+import Controller from "./src/controller/controller.class"
 
 document.querySelector("#app").innerHTML = `
   <header>
@@ -20,7 +20,7 @@ document.querySelector("#app").innerHTML = `
       <div id="form>
         <div>
           <label for="id-remove">Id:</label>
-          <input type="number" id="id-remove">
+          <input type="number" id="id-remove" min="1">
           <button id="remove">Borrar libro</button>
         </div>
 
@@ -39,22 +39,22 @@ document.querySelector("#app").innerHTML = `
 
           <div>
             <label for="price">Precio:</label>
-            <input type="number" id="price">
+            <input type="number" id="price" min="0">
           </div>
 
           <div>
             <label for="pages">Páginas:</label>
-            <input type="number" id="pages">
+            <input type="number" id="pages" required min="1">
           </div>
 
           <div>
             <label>Estado:</label>
             <label for="good">
-            <input type="radio" id="status" name="status" value="good">Good</label>
+            <input type="radio" id="status" name="status" value="good" required>Good</label>
             <label for="new">
-            <input type="radio" id="status" name="status" value="new">New</label>
+            <input type="radio" id="status" name="status" value="new" required>New</label>
             <label for="bad">
-            <input type="radio" id="status" name="status" value="bad">Bad</label>
+            <input type="radio" id="status" name="status" value="bad" required>Bad</label>
           </div>
 
           <div>
@@ -73,9 +73,9 @@ document.querySelector("#app").innerHTML = `
     <footer>
       <p>Miguel Ángel Martínez Domínguez | 2DAWA</p>
     </footer>
-`;
+`
 document.addEventListener("DOMContentLoaded", () => {
-  const myController = new Controller();
-  myController.init();
-});
+  const myController = new Controller()
+  myController.init()
+})
 
