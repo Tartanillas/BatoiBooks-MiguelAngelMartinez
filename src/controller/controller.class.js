@@ -15,7 +15,8 @@ export default class Controller {
 
     async init(){
         this.view.setBookSubmitHandler(this.handleSubmitBook.bind(this))
-        this.view.setBookRemoveHandler(this.handleRemoveBook.bind(this))
+        this.view.setBookButtonHandler(this.handleBookButton.bind(this))
+        //this.view.setBookRemoveHandler(this.handleRemoveBook.bind(this))
         try {
             await this.model.modules.populate()
             await this.model.users.populate()
@@ -49,4 +50,15 @@ export default class Controller {
         }
     }
 
+    handleBookButton(type, id) {
+        switch (type) {
+            case 'remove':
+                this.handleRemoveBook(id)
+                break
+            case 'edit':
+                this.handleEditBook(id)
+            case 'addCart':
+                this.handleAddCartBook(id)
+        }
+    }
 }

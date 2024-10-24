@@ -3,6 +3,7 @@ import batoiLogo from "/logoBatoi.png"
 import Controller from "./src/controller/controller.class"
 
 document.querySelector("#app").innerHTML = `
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <header>
     <img src="${batoiLogo}" alt="Logo Batoi" />
     <h1>BatoiBooks</h1>
@@ -17,13 +18,7 @@ document.querySelector("#app").innerHTML = `
     <div>
       <div id="messages"></div>
       <div id="list"></div>
-      <div id="form>
-        <div>
-          <label for="id-remove">Id:</label>
-          <input type="number" id="id-remove" min="1">
-          <button id="remove">Borrar libro</button>
-        </div>
-
+      <div id="form">
         <form id="bookForm">
           <div>
             <label for="id-module">Módulo:</label>

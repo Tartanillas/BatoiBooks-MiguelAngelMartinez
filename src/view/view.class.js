@@ -1,4 +1,3 @@
-import Modules from "../model/modules.class"
 export default class View {
     constructor(){
         this.bookList = document.getElementById("list")
@@ -18,12 +17,14 @@ export default class View {
     // Renderiza el libro pasado por parámetro para mostrarlo por pantalla
     renderBook(book){
         const contenedor = document.createElement('div')
-        contenedor.innerHTML += `<div class="card"><h1>Libro: ${book.id}</h5><h5>Código de módulo: ${book.moduleCode}</h5><h5>Editorial: ${book.publisher}</h5><h5>Precio: ${book.price}</h5><h5>Páginas: ${book.pages}</h5><h5>Estado: ${book.status}</h5><h5>Vendido el: ${book.soldDate}</h5><h5>Comentarios: ${book.comments}</h5></div>`
+        contenedor.id = book.id;
+        contenedor.className = "card";
+        contenedor.innerHTML += `<div><h1>Libro: ${book.id}</h5><h5>Código de módulo: ${book.moduleCode}</h5><h5>Editorial: ${book.publisher}</h5><h5>Precio: ${book.price}</h5><h5>Páginas: ${book.pages}</h5><h5>Estado: ${book.status}</h5><h5>Vendido el: ${book.soldDate}</h5><h5>Comentarios: ${book.comments}</h5><button class="addCart"><span class="material-icons">add_shopping_cart</span></button><button class="edit"><span class="material-icons">edit</span></button><button class="remove"><span class="material-icons">delete</span></button></div>`
         this.bookList.append(contenedor)
     }
     // Elimina el libro pasado por parámetro de la pantalla
     removeBook(bookId){
-        const libro = document.getElementById(bookId)
+        const libro = document.getElementById(bookId);
         this.bookList.remove(libro)
     }
     // Recibe un mensaje y su tipo y lo muestra por pantalla con su esitlo correspondiente
@@ -61,6 +62,19 @@ export default class View {
         this.remove.addEventListener('click', () => {
             const idLibro = document.getElementById('id-remove').value
             callback(idLibro)
+        })
+    }
+
+    setBookButtonHandler(callback) {
+        this.bookList.addEventListener('click', (event) => {
+            if(!event.target.closest("button")) return;
+            let buttonClass = event.target.className
+            if(buttonClass === 'remove') {
+                callback(buttonClass, event.target.parentElement.parentElement.id)
+            } else {
+                buttonClass = event.target.parentElement.className
+                callback(buttonClass, event.target.parentElement.parentElement.parentElement.id)
+            }
         })
     }
 }
