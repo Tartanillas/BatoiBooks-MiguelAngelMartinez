@@ -42,9 +42,13 @@ export default class Controller {
 
     async handleRemoveBook(bookId){
         try {
-            await this.model.books.removeBook(bookId)
-            this.view.removeBook(bookId)
-            this.view.renderMessage('Se ha eliminado el libro con ID: ' + bookId, 'success')
+            let libro = this.model.books.getBookById(bookId);
+            let respuesta = confirm("¿Estás seguro que deseas borrar el libro con ID: " + bookId + " y módulo: " + libro.moduleCode)
+            if(respuesta === true) {
+                await this.model.books.removeBook(bookId)
+                this.view.removeBook(bookId)
+                this.view.renderMessage('Se ha eliminado el libro con ID: ' + bookId, 'success')
+            }
         } catch(err) {
             this.view.renderMessage(err, 'fail')
         }
